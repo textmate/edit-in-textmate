@@ -14,6 +14,7 @@
 @implementation NSTextView (EditInTextMate)
 - (void)editInTextMate:(id)sender
 {
+	NSLog(@"[%@ editInTextMate:%@]", [self class], sender);
 	if(![self isEditable])
 		return (void)NSBeep();
 
@@ -32,12 +33,13 @@
 		} while(true);
 		selectedRange = NSMakeRange(0, [str length]);
 	}
-
+	NSLog(@"%s editing text: “%@” in view: %@", _cmd, [str substringWithRange:selectedRange], self);
 	[EditInTextMate externalEditString:[str substringWithRange:selectedRange] startingAtLine:lineNumber forView:self];
 }
 
 - (void)textMateDidModifyString:(NSString*)newString
 {
+	NSLog(@"[%@ textMateDidModifyString:%@]", [self class], newString);
 	NSRange selectedRange = [self selectedRange];
 	BOOL hadSelection = selectedRange.length != 0;
 	selectedRange = hadSelection ? selectedRange : NSMakeRange(0, [[self textStorage] length]);

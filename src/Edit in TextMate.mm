@@ -165,6 +165,7 @@ struct PBX_SelectionRange
 	[OpenFiles setObject:options forKey:[fileName precomposedStringWithCanonicalMapping]];
 	if([OpenFiles count] == 1)
 		[self setODBEventHandlers];
+	NSLog(@"%s asyncEditStringWithOptions - %@", _cmd, options);
 	[NSThread detachNewThreadSelector:@selector(asyncEditStringWithOptions:) toTarget:self withObject:options];
 }
 
