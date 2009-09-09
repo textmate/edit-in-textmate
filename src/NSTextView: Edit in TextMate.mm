@@ -14,7 +14,7 @@
 @implementation NSTextView (EditInTextMate)
 - (void)editInTextMate:(id)sender
 {
-	NSLog(@"[%@ editInTextMate:%@]", [self class], sender);
+	D(@"editInTextMate: view: %@", self);
 	if(![self isEditable])
 		return (void)NSBeep();
 

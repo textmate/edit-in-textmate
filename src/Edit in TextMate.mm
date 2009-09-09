@@ -32,6 +32,9 @@ struct PBX_SelectionRange
 };
 #pragma options align=reset
 
+static bool DebugEnabled = false;
+bool debug_enabled () { return DebugEnabled; }
+
 @implementation EditInTextMate
 + (void)setODBEventHandlers
 {
@@ -61,9 +64,13 @@ struct PBX_SelectionRange
 + (void)asyncEditStringWithOptions:(NSDictionary*)someOptions
 {
 	NSAutoreleasePool* pool = [NSAutoreleasePool new];
+	D(@"asyncEditStringWithOptions: %@", someOptions);
 
 	if(![self launchTextMate])
+	{
+		D(@"Failed to launch TextMate");
 		return;
+	}
 
 	/* =========== */
 
@@ -165,7 +172,6 @@ struct PBX_SelectionRange
 	[OpenFiles setObject:options forKey:[fileName precomposedStringWithCanonicalMapping]];
 	if([OpenFiles count] == 1)
 		[self setODBEventHandlers];
-	NSLog(@"%s asyncEditStringWithOptions - %@", _cmd, options);
 	[NSThread detachNewThreadSelector:@selector(asyncEditStringWithOptions:) toTarget:self withObject:options];
 }
 
@@ -264,6 +270,7 @@ struct PBX_SelectionRange
 	OpenFiles = [NSMutableDictionary new];
 	FailedFiles = [NSMutableSet new];
 //	NSString* bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+	DebugEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"EditInTextMateDebugEnabled"];
 	if([[NSUserDefaults standardUserDefaults] boolForKey:@"DisableEditInTextMateMenuItem"] == NO)
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(installMenuItem:) name:NSApplicationDidFinishLaunchingNotification object:[NSApplication sharedApplication]];
 }

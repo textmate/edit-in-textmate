@@ -283,10 +283,11 @@ static DOMHTMLTextAreaElement* find_active_text_area (WebView* view)
 @implementation WebView (EditInTextMate)
 - (void)editInTextMate:(id)sender
 {
+	D(@"editInTextMate: view: %@", self);
 	if([self isEditable])
 	{
 		// Mail uses an editable WebView, in which case we want to send the entire page to TextMate
-
+		D(@"WebView is editable");
 		NSString* const CARET = [NSString stringWithFormat:@"%C", 0xFFFD];
 		NSString* str = @"";
 		int lineNumber = 0;
@@ -328,21 +329,25 @@ static DOMHTMLTextAreaElement* find_active_text_area (WebView* view)
 	{
 		// Likely the user wants to edit just a text area, so let’s try to find which
 		if(DOMHTMLTextAreaElement* textArea = find_active_text_area(self))
-			{
-				NSString* str = [textArea value];
-				unsigned long selectionStart = [textArea selectionStart];
-				int lineNumber = 0;
-				NSRange range = NSMakeRange(0, 0);
-				do {
-					NSRange oldRange = range;
-					range = [str lineRangeForRange:NSMakeRange(NSMaxRange(range), 0)];
-					if(NSMaxRange(oldRange) == NSMaxRange(range) || selectionStart < NSMaxRange(range))
-						break;
-					lineNumber++;
-				} while(true);
-				[EditInTextMate externalEditString:str startingAtLine:lineNumber forView:self withObject:textArea];
-			}
-		else	NSBeep();
+		{
+			NSString* str = [textArea value];
+			unsigned long selectionStart = [textArea selectionStart];
+			int lineNumber = 0;
+			NSRange range = NSMakeRange(0, 0);
+			do {
+				NSRange oldRange = range;
+				range = [str lineRangeForRange:NSMakeRange(NSMaxRange(range), 0)];
+				if(NSMaxRange(oldRange) == NSMaxRange(range) || selectionStart < NSMaxRange(range))
+					break;
+				lineNumber++;
+			} while(true);
+			[EditInTextMate externalEditString:str startingAtLine:lineNumber forView:self withObject:textArea];
+		}
+		else
+		{
+			D(@"Couldn’t find edit target in WebView");
+			NSBeep();
+		}
 	}
 }
 
