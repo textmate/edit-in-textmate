@@ -56,8 +56,12 @@ bool debug_enabled () { return DebugEnabled; }
 	for(unsigned i = [array count]; --i; )
 	{
 		if([[[array objectAtIndex:i] objectForKey:@"NSApplicationBundleIdentifier"] isEqualToString:TextMateBundleIdentifier])
+		{
+			D(@"TextMate already running");
 			return YES;
+		}
 	}
+	D(@"TextMate not running, launching it");
 	return [[NSWorkspace sharedWorkspace] launchAppWithBundleIdentifier:TextMateBundleIdentifier options:0L additionalEventParamDescriptor:nil launchIdentifier:nil];
 }
 
@@ -172,6 +176,7 @@ bool debug_enabled () { return DebugEnabled; }
 	[OpenFiles setObject:options forKey:[fileName precomposedStringWithCanonicalMapping]];
 	if([OpenFiles count] == 1)
 		[self setODBEventHandlers];
+	D(@"detached request to %@: %@", self, options);
 	[NSThread detachNewThreadSelector:@selector(asyncEditStringWithOptions:) toTarget:self withObject:options];
 }
 

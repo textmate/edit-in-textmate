@@ -33,7 +33,7 @@
 		} while(true);
 		selectedRange = NSMakeRange(0, [str length]);
 	}
-	NSLog(@"%s editing text: “%@” in view: %@", _cmd, [str substringWithRange:selectedRange], self);
+	D(@"%s editing %u bytes from view: %@", _cmd, [[str substringWithRange:selectedRange] length], self);
 	[EditInTextMate externalEditString:[str substringWithRange:selectedRange] startingAtLine:lineNumber forView:self];
 }
 
