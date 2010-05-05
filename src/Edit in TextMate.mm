@@ -18,7 +18,7 @@
 
 static NSMutableDictionary* OpenFiles;
 static NSMutableSet* FailedFiles;
-static NSString* TextMateBundleIdentifier = @"com.macromates.textmate";
+static NSString* TextMateBundleIdentifier = @"com.macromates.Avian";
 
 #pragma options align=mac68k
 struct PBX_SelectionRange
