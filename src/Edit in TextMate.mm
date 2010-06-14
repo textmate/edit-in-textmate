@@ -96,7 +96,7 @@ bool debug_enabled () { return DebugEnabled; }
 	{
 		PBX_SelectionRange pos = { };
 		pos.lineNum = line;
-		[appleEvent setParamDescriptor:[NSAppleEventDescriptor descriptorWithDescriptorType:'????' bytes:&pos length:sizeof(pos)] forKeyword:keyAEPosition];
+		[appleEvent setParamDescriptor:[NSAppleEventDescriptor descriptorWithDescriptorType:kUnknownType bytes:&pos length:sizeof(pos)] forKeyword:keyAEPosition];
 	}
 
 	OSStatus status = AESend([appleEvent aeDesc], &reply, kAEWaitReply, kAENormalPriority, kAEDefaultTimeout, NULL, NULL);
