@@ -90,7 +90,9 @@ bool debug_enabled () { return DebugEnabled; }
 
 	UInt32 packageType = 0, packageCreator = 0;
 	CFBundleGetPackageInfo(CFBundleGetMainBundle(), &packageType, &packageCreator);
-	[appleEvent setParamDescriptor:[NSAppleEventDescriptor descriptorWithTypeCode:packageCreator] forKeyword:keyFileSender];
+	if(packageCreator == kUnknownType)
+			[appleEvent setParamDescriptor:[NSAppleEventDescriptor descriptorWithDescriptorType:typeApplicationBundleID data:[[[NSBundle mainBundle] bundleIdentifier] dataUsingEncoding:NSUTF8StringEncoding]] forKeyword:keyFileSender];
+	else	[appleEvent setParamDescriptor:[NSAppleEventDescriptor descriptorWithTypeCode:packageCreator] forKeyword:keyFileSender];
 
 	if(int line = [[someOptions objectForKey:@"line"] intValue])
 	{
