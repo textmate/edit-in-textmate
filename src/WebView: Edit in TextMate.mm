@@ -288,7 +288,7 @@ static DOMHTMLTextAreaElement* find_active_text_area (WebView* view)
 	{
 		// Mail uses an editable WebView, in which case we want to send the entire page to TextMate
 		D(@"WebView is editable");
-		NSString* const CARET = [NSString stringWithFormat:@"%C", 0xFFFD];
+		NSString* const CARET = @"\uFFFD";
 		NSString* str = @"";
 		int lineNumber = 0;
 
