@@ -110,7 +110,7 @@ bool debug_enabled () { return DebugEnabled; }
 			status = [errorDescriptor int32Value];
 		
 		if(status != noErr)
-			NSLog(@"%s error %d", _cmd, status), NSBeep();
+			NSLog(@"%s error %d", SELNAME(_cmd), status), NSBeep();
 	}
 
 	[pool release];
@@ -211,9 +211,9 @@ bool debug_enabled () { return DebugEnabled; }
 	if (fileName)
 	{
 		[FailedFiles addObject:fileName];
-		NSLog(@"%s view %p, %@, window %@", _cmd, view, view, [view window]);
-		NSLog(@"%s file name %@, options %@", _cmd, fileName, [options description]);
-		NSLog(@"%s all %@", _cmd, [OpenFiles description]);
+		NSLog(@"%s view %p, %@, window %@", SELNAME(_cmd), view, view, [view window]);
+		NSLog(@"%s file name %@, options %@", SELNAME(_cmd), fileName, [options description]);
+		NSLog(@"%s all %@", SELNAME(_cmd), [OpenFiles description]);
 		NSBeep();
 	}
 }

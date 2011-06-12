@@ -55,7 +55,7 @@
 	else
 	{
 		NSBeep();
-		NSLog(@"%s couldn't edit text", _cmd);
+		NSLog(@"%s couldn't edit text", SELNAME(_cmd));
 	}
 }
 @end
